@@ -1,0 +1,27 @@
+
+                    FutureBuilder(
+                      future: pageDocs.get(),
+                      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+                        if (snapshot.data != null){
+                          List<DocumentSnapshot> documents = snapshot.data!.docs;
+                          return ListView(
+                            children: documents.map((document) => DocumentView(document)).toList(),);
+                        }
+                        return Center(
+                          child: CupertinoActivityIndicator(),
+                        );
+                      },
+                    ),
+                    StreamBuilder(
+                      stream: pageQuerySnapshot,
+                      builder: (context, AsyncSnapshot<QuerySnapshot> snapshot){
+                        if(!snapshot.hasData){
+                          return CircularProgressIndicator();
+                        }
+                        //var before = FirebaseFirestore.instance
+                        if (snapshot.hasError) return Text("SearchPage Error: ${snapshot.error}");
+                        List<DocumentSnapshot> documents = snapshot.data!.docs;
+                        return ListView(
+                          children: documents.map((document) => DocumentView(document)).toList(),);
+                      },
+                    ),

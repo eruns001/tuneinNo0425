@@ -1,0 +1,65 @@
+
+          var temp = FirebaseFirestore.instance.collection("uqpPost").orderBy("Time").limit(10);
+          temp.get().then((QuerySnapshot value){
+            print("searchPageFloating : ${value.docs[0].id}");
+          });
+
+
+
+
+ListView TeamPage
+
+
+ListView(
+                    shrinkWrap: true,
+                    controller: new ScrollController(),
+                    scrollDirection: Axis.vertical,
+                    padding: const EdgeInsets.all(8),
+                    children: snapshot.data!['teamMember'].map(( memberId){
+                      return FutureBuilder(
+                        future: FirebaseFirestore.instance.collection('Account').doc(memberId).get(),
+                        builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot){
+                          if (snapshot.data != null){
+                            Map<String, dynamic>? data = snapshot.data!.data();
+                            return Container(
+                              margin: EdgeInsets.only(left: _device_width * 0.065),
+                              child: Row(
+                                children: [
+                                  ClipOval(
+                                      child: SizedBox(
+                                        height: _device_width * 0.12,
+                                        width: _device_width * 0.12,
+                                        child: Image.network(
+                                          data!["imageUrl"],
+                                        ),
+                                      )
+                                  ),
+                                  Container(
+                                    child: Text(
+                                      data["nickName"],
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                    margin: EdgeInsets.only(left: _device_width * 0.03),
+                                  ),
+                                  Container(
+                                    child: Text(
+                                      data["roll"],
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                    margin: EdgeInsets.only(left: _device_width * 0.03),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
+                          return Center(
+                            child: CupertinoActivityIndicator(),
+                          );
+                        },
+                      );
+                    }).toList,
+                  );

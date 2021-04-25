@@ -1,0 +1,17 @@
+return Container(
+                            margin: EdgeInsets.all(_device_width * 0.01),
+                            width: _device_width * (38.4 / 100),
+                            height: _device_height * (18.4 / 100),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: const Color(0xff46abdb), width: 1),
+                                borderRadius: BorderRadius.all(Radius.circular(20)),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: const Color(0x80cacaca),
+                                      offset: Offset(0, -1),
+                                      blurRadius: 16,
+                                      spreadRadius: 2)
+                                ],
+                                color: const Color(0xff46abdb)),
+                            child: ,
+                          );
